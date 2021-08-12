@@ -1,0 +1,13 @@
+{
+    "name": "com.signal",
+    "description": "Signal",
+    "contributors": [
+      "Tanvi Pandey <cz19182@bristol.ac.uk>"
+    ],
+    "main": "index.js",
+    "dependencies": {
+      "form-data": "^2.3.2",
+      "querystring": "~0.2.0",
+      "signal-node-client": "0.0.6"
+    }
+  }

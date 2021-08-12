@@ -1,0 +1,29 @@
+dataset @com.signal
+#[language="en"] {
+
+stream := monitor (@com.signal.direct_messages())
+    #_[utterances=["when i receive a direct message on signal",
+                   "when somebody messages me",
+                   "when somebody sends me a message",
+                   "when somebody sends me a message on signal",
+                   "when somebody messages me on signal",
+                   "when i get a message on signal"]]
+    #[id=28017008]
+    ;
+
+    stream (p_sender :Entity(tt:username)) := monitor ((@com.signal.direct_messages()), sender == p_sender)
+    #_[utterances=["when i receive a direct message from ${p_sender:no-undefined} on signal",
+                   "if i receive a dm on signal from ${p_sender:no-undefined}",
+                   "when ${p_sender:no-undefined} dms me",
+                   "when ${p_sender:no-undefined} sends me a direct message on signal"]]
+    #[id=28017014]
+    ;
+
+action (p_to :Entity(tt:username), p_message :String) := @com.signal.send_direct_message(to=p_to, message=p_message)
+    #_[utterances=["send a dm on signal to ${p_to} saying ${p_message}",
+                   "send a direct message on signal to ${p_to} saying ${p_message}",
+                   "dm ${p_to} on signal saying ${p_message}",
+                   "send a message on signal to ${p_to} saying ${p_message}"]]
+    #[id=28017050]
+    ;
+}
