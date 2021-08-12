@@ -1,0 +1,53 @@
+class @com.telegram
+{
+	import loader from @org.thingpedia.v2();
+	import config from @org.thingpedia.config.oauth2();
+    	
+    monitorable list query direct_messages(out sender: Entity(tt:username)
+                                         #_[canonical={
+                                            base=["sender", "author", "user"],
+                                            passive_verb=["written by #"],
+                                            preposition=["from #", "by #"]
+                                         }]
+                                         #[string_values="com.telegram:username"],
+                                         out message: String
+                                         #_[canonical={
+                                           base=["text", "message", "content"],
+                                           verb=["contain #", "say #", "talk about #"],
+                                           passive_verb=["matching #", "containing #", "saying #"],
+                                           preposition=["about #"]
+                                         }]
+                                         #[string_values="tt:long_free_text"]
+                                         )
+  #_[canonical=["telegram direct messages",
+                "telegram messages",
+                "my telegram direct messages",
+                "the direct messages i received on telegram",
+                "the messages i got on telegram",
+                "my telegram messages",
+                "my telegram dms"]]
+  #_[confirmation="messages you received on telegram"]
+  #_[formatted=[{type="text",text="@${sender}: ${message}"}]]
+  #[poll_interval=600000ms]
+  #[doc="get recent direct messages you received"];
+
+  action send_direct_message(in req to: Entity(tt:username)
+                             #_[prompt="who do you want to send the message to"]
+                             #_[canonical={
+                               base=["recipient"],
+                               preposition=["to #"]
+                             }]
+                             #[string_values="com.telegram:username"],
+                             in req message: String
+                             #_[prompt="what message do you want to send"]
+                             #_[canonical={
+                               base=["message", "text", "content"],
+                               preposition=["saying #"]
+                             }]
+                             #[string_values="tt:long_free_text"])
+  #_[canonical="send message on telegram"]
+  #_[confirmation="send a direct message on Telegram to $to saying $message"]
+  #[doc="send a direct message"];
+    
+
+}
